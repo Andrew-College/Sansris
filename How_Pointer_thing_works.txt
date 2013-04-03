@@ -1,0 +1,14 @@
+LPCTSTR = Long Pointer to a Const TCHAR STRing  (Don't worry, a Long Pointer is the same as a pointer. There were two flavors of pointers under 16-bit windows.)
+
+Here's the table:
+
+LPSTR = char*
+LPCSTR = const char*
+LPWSTR = wchar_t*
+LPCWSTR = const wchar_t*
+LPTSTR = char* or wchar_t* depending on _UNICODE
+LPCTSTR = const char* or const wchar_t* depending on _UNICODE
+
+"myname@address.com" is a const char*.  Try the alternative L"myname@address.com" which is a const wchar_t*.
+
+If this compiles, then get into the habit of using the _T macro which will prepend L for Unicode builds, keeping your code as portable as possile.  e.g. _T("myname@address.com")
