@@ -124,7 +124,7 @@ void setup(){
 	cout << "<Ok>   <Apply>   <Cancel>";
 
 	//moving the cursor, changing the values
-	setCursor((scr_width/2)+1,(scr_height/2)-4);
+	setCursor((scr_width/2),(scr_height/2)-4);
 	
 	while(true){
 
@@ -198,6 +198,30 @@ void setup(){
 		//Get user input
 		char input = getch();
 		//make if elses, switches dont work unless enums, etc. are used
+		if(input == cUp){
+			setCursor(lastY.X, lastY.Y);
+		}
+		else if(input == cDown){
+			setCursor(nextY.X, nextY.Y);
+		}
+		else if(input == cLeft){
+			setCursor(lastX.X, lastX.Y);
+		}
+		else if(input == cRight){
+			setCursor(nextX.X, nextY.Y);
+		}
+		else if(input == '\n'){//They want an action done
+			if(atX == (scr_width/2) && atY == (scr_height/2)-4){//Direction changing
+
+			}
+
+		}
+		else{
+			//Nothin here but us potatoes
+		}
+
+		//Now for the interaction
+
 	}
 }
 

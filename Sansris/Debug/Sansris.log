@@ -1,7 +1,7 @@
-﻿Build started 06/04/2013 18:45:27.
+﻿Build started 06/04/2013 21:41:45.
      1>Project "C:\Users\Andmin\Documents\Visual Studio 2010\Projects\Sansris\Sansris\Sansris.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\Sansris.unsuccessfulbuild".
+         Creating "Debug\Sansris.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
@@ -28,4 +28,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:33.51
+Time Elapsed 00:00:35.28
