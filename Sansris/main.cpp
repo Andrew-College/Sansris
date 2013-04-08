@@ -1,6 +1,7 @@
 //Andrew Tetris clone
 
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
 #include <conio.h>
 #include <string>
@@ -20,7 +21,7 @@ void printCbyC(string input, int wait);
 void setup();
 
 unsigned int scr_width, scr_height;
-int mov_x = 0, mov_y = 1, atX = 0, atY = 0;
+int mov_x = 0, mov_y = 1, atX = 0, atY = 0, direction = 0;
 COORD nextX = {0,0}, lastX = {0,0}, nextY = {0,0},lastY = {0,0};
 
 char cUp = 'w', cDown = 's', cLeft = 'a', cRight = 'd';
@@ -39,7 +40,7 @@ int main(){
 	scr_width= 50;
 	scr_height = 49;
 	//GetWindowRect(console, &sides);
-	intro();
+	//intro();
 	border();
 	setup();
 	getch();
@@ -102,17 +103,26 @@ void setup(){
 	setCursor((scr_width/2)-4,(scr_height/2)-5);
 	cout << "Direction";
 	setCursor((scr_width/2),(scr_height/2)-4);
-	if(mov_x ==0 && mov_y == 1){
+	if(direction = 0){
 		cout << "\\/";
+		mov_x = 0, mov_y = 1;
 	}
-	else if(mov_x ==0 && mov_y == -1){
+	else if(direction = 1){
 		cout << "/\\";
+		mov_x = 0, mov_y = -1;
 	}
-	else if(mov_x ==1 && mov_y == 0){
+	else if(direction = 2){
 		cout << "> ";
+		mov_x = 1, mov_y = 0;
 	}
-	else if(mov_x ==0 && mov_y == 1){
+	else if(direction = 3){
 		cout << "< ";
+		mov_x = -1, mov_y = 0;
+	}
+	else{
+		//Invalid value, defaulting to 0,1
+		mov_x =0, mov_y = 1;
+		cout << "\\/";
 	}
 	setCursor((scr_width/2)-5,(scr_height/2)-1);
 	cout << "Screen sizes";
@@ -125,7 +135,7 @@ void setup(){
 
 	//moving the cursor, changing the values
 	setCursor((scr_width/2),(scr_height/2)-4);
-	
+
 	while(true){
 
 		//Update what cursor can move to
@@ -210,12 +220,135 @@ void setup(){
 		else if(input == cRight){
 			setCursor(nextX.X, nextY.Y);
 		}
-		else if(input == '\n'){//They want an action done
-			if(atX == (scr_width/2) && atY == (scr_height/2)-4){//Direction changing
+		else if(input == 'e'){//They want an action done
+			//cout << "action";
+			if(atX == (scr_width/2)-10 && atY == (scr_height/2)+4){//At <Ok>
 
 			}
+			else if(atX == (scr_width/2) && atY == (scr_height/2)+4){//At <Apply>
+				ofstream outFile("settings.sans");
+				outFile << "Direction(x); " << mov_x;
+				outFile << "Direction(y); " << mov_y;
+				outFile << "Width; " << scr_width;
+				outFile << "Height; " << scr_height;
+				outFile.close();
+				return;
+			}
+			else if(atX == (scr_width/2)+11 && atY == (scr_height/2)+4){//At <Cancel>
+				return;
+			}
+			do{
+				//cout << "change";
+				input = getch();
+				if(atX == (scr_width/2) && atY == (scr_height/2)-4){//Direction changing
+					if(input == cUp){
+						if(direction ==3){
+							direction = 0;
+						}
+						else{
+							direction++;
+						}
+					}
+					if(input == cDown){
+						if(direction == 0){
+							direction = 3;
+						}
+						else{
+							direction--;
+						}
+					}
+					if(input == cLeft){
+						//nothing
+					}
+					if(input == cRight){
+						//nothing
+					}
+				}
 
-		}
+
+				else if(atX == (scr_width/2)-1 && atY == (scr_height/2)-1){//At size (length(*1))
+					if(input == cUp){
+						scr_width++;
+					}
+					if(input == cDown){
+						scr_width--;
+					}
+					if(input == cLeft){
+						setCursor(atX--, atY);
+					}
+					if(input == cRight){
+						setCursor(atX--, atY);
+					}
+				}
+				else if(atX == (scr_width/2)-2 && atY == (scr_height/2)-1){//At size (length(1*))
+					if(input == cUp){
+						scr_width+=10;
+					}
+					if(input == cDown){
+						scr_width-=10;
+					}
+					if(input == cLeft){
+						setCursor(atX++, atY);
+					}
+					if(input == cRight){
+						setCursor(atX++, atY);
+					}
+				}
+				else if(atX == (scr_width/2)+11 && atY == (scr_height/2)-1){//At size (height)(*1)
+					if(input == cUp){
+						scr_height++;
+					}
+					if(input == cDown){
+						scr_height--;
+					}
+					if(input == cLeft){
+						setCursor(atX--, atY);
+					}
+					if(input == cRight){
+						setCursor(atX--, atY);
+					}
+				}
+				else if(atX == (scr_width/2)-2 && atY == (scr_height/2)-1){//At size (length(1*))
+					if(input == cUp){
+						scr_height+=10;
+					}
+					if(input == cDown){
+						scr_height-=10;
+					}
+					if(input == cLeft){
+						setCursor(atX++, atY);
+					}
+					if(input == cRight){
+						setCursor(atX++, atY);
+					}
+				}
+
+				//update direction
+				setCursor((scr_width/2),(scr_height/2)-4);
+				if(direction = 0){
+					cout << "\\/";
+					mov_x = 0, mov_y = 1;
+				}
+				else if(direction = 1){
+					cout << "/\\";
+					mov_x = 0, mov_y = -1;
+				}
+				else if(direction = 2){
+					cout << "> ";
+					mov_x = 1, mov_y = 0;
+				}
+				else if(direction = 3){
+					cout << "< ";
+					mov_x = -1, mov_y = 0;
+				}
+				//update width and height
+				setCursor((scr_width/2)-10,(scr_height/2)-1);
+				cout << "length; " << scr_width;
+				setCursor((scr_width/2)+2,(scr_height/2)-1);
+				cout << "height; " << scr_height;
+				//end update
+			}while(input != 'e');
+		} 
 		else{
 			//Nothin here but us potatoes
 		}
